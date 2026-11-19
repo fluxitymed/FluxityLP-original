@@ -727,10 +727,3 @@ section{margin-top:0;border-radius:0;box-shadow:none}
 .pain .card:nth-child(1) p{font-size:1.02rem;max-width:340px}
 @media(max-width:900px){.pain{grid-template-columns:1fr 1fr}.pain .card:nth-child(1){grid-column:1/-1;grid-row:auto;gap:2rem}.pain .card:nth-child(1) .ib{margin-bottom:1.2rem}}
 @media(max-width:600px){.pain{grid-template-columns:1fr}.pain .card:nth-child(1){padding:1.8rem 1.5rem}.pain .card:nth-child(1) h3{font-size:1.4rem}.pain .card:nth-child(1):after{font-size:6rem}}
-
-/* Hero no mobile: foto dos sócios antes da copy, sem alterar o conteúdo. */
-@media(max-width:900px){
-  .hero-in{display:flex;flex-direction:column;align-items:stretch;gap:0}
-  .hero-in .photo{order:-1;width:100%}
-  .hero-in .hero-txt{width:100%}
-}

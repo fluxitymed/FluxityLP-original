@@ -734,3 +734,17 @@ section{margin-top:0;border-radius:0;box-shadow:none}
   .hero-in .photo{order:-1;width:100%}
   .hero-in .hero-txt{width:100%}
 }
+
+/* Hero compacto para caber integralmente na tela de celulares. */
+@media(max-width:600px){
+  .hero-in{padding-top:4rem}
+  .hero-in .photo .big.wm{margin-bottom:-.35rem}
+  .hero-in .photo .big.wm img{height:clamp(42px,12vw,58px)}
+  .hero-in .photo>img{width:min(52vw,210px)}
+  .hero-in .hero-txt{padding-bottom:1.1rem}
+  .hero-in .tag{font-size:.62rem;margin-bottom:.45rem}
+  .hero h1{font-size:clamp(1.35rem,6vw,1.65rem);margin-bottom:.65rem}
+  .hero .lead{font-size:.86rem;line-height:1.4;margin-bottom:.45rem}
+  .hero .sub2{font-size:.78rem;line-height:1.38;margin-bottom:.8rem}
+  .hero .btn{padding:.72rem 1rem;font-size:.82rem}
+}

@@ -14,7 +14,7 @@ const CONFIG = {
   if(CONFIG.metaPixel){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",CONFIG.metaPixel);fbq("track","PageView");}
 })();
 const track=(n)=>{try{window.fbq&&fbq("track",n==="lead"?"Lead":"Contact");window.gtag&&gtag("event",n==="lead"?"generate_lead":"click_whatsapp")}catch(_){}};
-const SOLVE = ["Captação de pacientes particulares","Tráfego pago","Atendimento pelo WhatsApp","Follow-up ativo","Confirmação e lembrete","CRM e rastreamento","Relatórios com métricas reais","Treinamento da equipe","Previsibilidade comercial","Consultas e cirurgias agendadas"];
+const SOLVE = ["IA para atendimento inicial","Equipe de vendedores","CRM e rastreamento","Aquisição multicanal","Gestão de tráfego pago","Social Selling","Social Media","Treinamento comercial","Reativação de pacientes","Metas e planejamento"];
 
 const $ = id => document.getElementById(id);
 /* Faixa infinita */
@@ -30,78 +30,16 @@ document.querySelectorAll(".grid").forEach(g => [...g.children].forEach((c,i) =>
 document.querySelectorAll("section h2, section .sub, #problema .sepl").forEach(el=>el.classList.add("rv"));
 document.querySelectorAll(".rv").forEach(el => io.observe(el));
 addEventListener("scroll", () => { $("bar").style.width = (scrollY / (document.documentElement.scrollHeight - innerHeight) * 100) + "%"; }, {passive:true});
-document.querySelectorAll(".card").forEach(c => {
-  c.addEventListener("mousemove", e => { const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5; c.style.transform = `perspective(700px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-6px)`; });
-  c.addEventListener("mouseleave", () => c.style.transform = "");
-});
 
 /* Contador */
 function tween(el,to,fmt=n=>Math.round(n),d=1200){const s=performance.now();(function f(t){const p=Math.min((t-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=fmt(to*e);p<1&&requestAnimationFrame(f)})(s)}
 const brl=n=>Math.round(n).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
-/* Calculadora */
-function calc(){
-  const L=+$("iL").value||0,C=+$("iC").value||0,P=+$("iP").value||0,T=+$("iT").value||0;
-  const a=L*C/100*T,b=L*P/100*T,h=Math.round(L*C/100),f=Math.round(L*P/100);
-  tween($("rA"),a,brl,600);tween($("rB"),b,brl,600);tween($("rN"),Math.max(b-a,0),brl,600);
-  tween($("pH"),h,undefined,600);tween($("pF"),f,undefined,600);tween($("pE"),Math.max(f-h,0),undefined,600);tween($("rY"),Math.max(b-a,0)*12,brl,600);
-  $("sA").textContent="Conversão atual: "+C.toLocaleString("pt-BR")+"%";
-  $("sB").textContent="Conversão projetada: "+P.toLocaleString("pt-BR")+"%";
-  $("sN").textContent="Com "+L+" contatos por mês, saindo de "+C+"% para "+P+"% de conversão.";
-}
-["iL","iC","iP","iT"].forEach(i=>$(i).addEventListener("input",calc)); calc();
-/* Antes x depois (valores ilustrativos: edite aqui) */
-const SIM={ticket:1200,bad:{leads:200,resp:.75,ag:.32,pac:.70},good:{leads:215,resp:.93,ag:.35,pac:.76}};
-function funnel(c){const r=Math.round(c.leads*c.resp),a=Math.round(r*c.ag),p=Math.round(a*c.pac);return[["Leads captados",c.leads],["Leads atendidos a tempo",r],["Agendamentos",a],["Pacientes atendidos",p]]}
-function runSim(){
-  const max=SIM.good.leads, fb=funnel(SIM.bad), fg=funnel(SIM.good);
-  const rows=f=>f.map(([l])=>`<div class="fr2"><span>${l}</span><div class="fb"><u><b>0</b></u></div></div>`).join("");
-  $("fnBad").innerHTML=rows(fb); $("fnGood").innerHTML=rows(fg);
-  [["fnBad",fb],["fnGood",fg]].forEach(([id,f])=>[...$(id).children].forEach((r,i)=>setTimeout(()=>{
-    r.querySelector("u").style.width=Math.max(24,f[i][1]/max*100)+"%"; tween(r.querySelector("b"),f[i][1]);
-  },150+i*260)));
-  const rb=fb[3][1]*SIM.ticket, rg=fg[3][1]*SIM.ticket;
-  tween($("rvBad"),rb,brl,1800); tween($("rvGood"),rg,brl,1800); tween($("gain"),rg-rb,n=>"+"+brl(n),1800);
-}
-$("simReplay").onclick=runSim;
-new IntersectionObserver((e,o)=>e[0].isIntersecting&&(runSim(),o.disconnect()),{threshold:.25}).observe($("antes-depois"));
-
 /* Máscara de telefone */
 $("tel").addEventListener("input", e => {
   let v = e.target.value.replace(/\D/g,"").slice(0,11);
   v = v.length>10 ? v.replace(/(\d{2})(\d{5})(\d{4})/,"($1) $2-$3") : v.length>6 ? v.replace(/(\d{2})(\d{4})(\d{0,4})/,"($1) $2-$3") : v.length>2 ? v.replace(/(\d{2})(\d*)/,"($1) $2") : v;
   e.target.value = v;
 });
-
-/* Conversas reais animadas (troque pelos seus prints/textos reais) */
-const CHATS=[
- {chip:"6h20 sem resposta",t:"Lead esperando 6h20",d:"Paciente pediu para agendar consulta e ficou horas sem retorno. Quando a resposta chega tarde, a intenção esfria e a oportunidade fica muito mais frágil.",day:"Segunda, 29 de maio",
-  m:[["in","Olá, gostaria de agendar uma consulta com o doutor.","02:21"],["out","Bom dia, com quem eu falo?\n\nEssa semana o doutor tem disponibilidade na quinta-feira, às 16h.","08:41"],["out","Para eu fazer o agendamento, me passe os seguintes dados, por favor:\nNome\nData de nascimento\nCPF\nCelular\nEndereço","08:41"]]},
- {chip:"25 min de espera",t:"Preço sem condução",d:"O paciente pergunta o valor e recebe um número seco. Sem construir valor nem conduzir a conversa, ele pede desconto e a venda esfria.",day:"Hoje",
-  m:[["in","E o valor da consulta também? Por favor.","15:26"],["out","Boa tarde.\nDesculpe a demora, eu estava em procedimento.","15:51"],["out","O valor da consulta presencial é de R$ 450.","15:51"],["in","Existe alguma forma de redução do valor?","15:52"],["out","A consulta particular acontece com atendimento personalizado, tempo dedicado e foco total no seu caso.","15:54"]]},
- {chip:"Resposta só no dia seguinte",t:"Contato que esfria",d:"A primeira mensagem fica sem retorno até o outro dia. Quando alguém responde, o paciente já perguntou o preço e o interesse não é mais o mesmo.",day:"Segunda-feira",
-  m:[["in","Olá, gostaria de obter mais informações sobre o atendimento.","09:48"],["out","Bom dia.\nTudo bem? Aqui é o time comercial da clínica. Como podemos te ajudar?","07:03"],["in","Gostaria de saber o valor da consulta.","07:16"],["out","A primeira consulta presencial está em R$ 450, com direito a retorno em até 60 dias. Se for online, ela está em R$ 300.","07:23"]]}
-];
-let ci=0, run=0, auto;
-const msgs=$("msgs"), dots=$("cDots");
-CHATS.forEach(()=>dots.appendChild(document.createElement("span")));
-function show(i){
-  ci=(i+CHATS.length)%CHATS.length; const id=++run, c=CHATS[ci];
-  clearTimeout(auto); msgs.innerHTML="";
-  [...dots.children].forEach((d,k)=>d.classList.toggle("on",k===ci));
-  const info=$("cInfo"); info.classList.remove("sw"); void info.offsetWidth; info.classList.add("sw");
-  $("cChip").textContent=c.chip; $("cPrint").textContent="Print 0"+(ci+1); $("cTitle").textContent=c.t; $("cDesc").textContent=c.d;
-  let t=300;
-  const at=(ms,fn)=>setTimeout(()=>run===id&&fn(),ms);
-  at(t,()=>{const d=document.createElement("div");d.className="dayl";d.textContent=c.day;msgs.appendChild(d)});
-  c.m.forEach(([side,txt,hr])=>{
-    t+=side==="out"?600:700;
-    if(side==="out"){const T=t; at(T,()=>{const ty=document.createElement("div");ty.className="typing";ty.id="ty";ty.innerHTML="<b></b><b></b><b></b>";msgs.appendChild(ty)}); t+=1100; at(t,()=>$("ty")&&$("ty").remove());}
-    at(t,()=>{const m=document.createElement("div");m.className="m "+(side==="in"?"lead":"out");m.innerHTML=txt.replace(/</g,"&lt;")+"<small>"+hr+"</small>";msgs.appendChild(m)});
-  });
-  auto=setTimeout(()=>run===id&&show(ci+1),t+4500);
-}
-$("cPrev").onclick=()=>show(ci-1); $("cNext").onclick=()=>show(ci+1);
-new IntersectionObserver((e,o)=>e[0].isIntersecting&&(show(0),o.disconnect()),{threshold:.3}).observe($("conversas"));
 
 /* Formulário + qualificação + tela de obrigado */
 const QUAL={ /* pontos por resposta (máx. 9). Edite aqui os critérios */
@@ -159,13 +97,6 @@ $("form").addEventListener("submit",async e=>{
 
 const waLink = m => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(m)}`;
 
-
-/* Acolhimento: 4 a 6 de cada 10 contatos se perdem */
-new IntersectionObserver((e,o)=>{
-  if(!e[0].isIntersecting) return; o.disconnect();
-  tween($("s1"),4,undefined,1500); tween($("s2"),6,undefined,1900);
-  const u=document.querySelectorAll("#dots .rng-track u"); [["40%",0],["20%",.9],["40%",1.7]].forEach(([w,dl],i)=>{u[i].style.transitionDelay=dl+"s";u[i].style.width=w;});
-},{threshold:.45}).observe($("ac"));
 
 /* Carrossel de cards dos sócios */
 (function(){
@@ -250,12 +181,16 @@ new IntersectionObserver((e,o)=>{
   (function loop(){x+=(tx-x)*.15;y+=(ty-y)*.15;d.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
 })();
 
-/* "Ver detalhes" dos serviços */
-document.querySelectorAll(".sv-m").forEach(b=>b.addEventListener("click",()=>{const c=b.closest(".sv-c"),o=c.classList.toggle("open");b.setAttribute("aria-expanded",o);}));
-
 /* Profundidade: brilhos de fundo com paralaxe suave */
 (function(){
   const secs=[...document.querySelectorAll("section")]; let tick=false;
   const upd=()=>{tick=false;const vh=innerHeight;secs.forEach(s=>{const r=s.getBoundingClientRect();if(r.bottom<-200||r.top>vh+200)return;s.style.setProperty("--py",((r.top+r.height/2-vh/2)*-.12).toFixed(1)+"px");const d=Math.min(1,Math.abs((r.top+r.height/2-vh/2)/(vh/2+r.height/2)));s.style.setProperty("--sc",(1-d*.06).toFixed(3));});};
   addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true}); upd();
 })();
+
+/* Contadores (hero e autoridade) */
+document.querySelectorAll("[data-count]").forEach(el=>{
+  const to=parseFloat(el.dataset.count), dec=+el.dataset.dec||0, pre=el.dataset.pre||"", suf=el.dataset.suf||"";
+  const fmt=n=>pre+n.toLocaleString("pt-BR",{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;
+  new IntersectionObserver((e,o)=>{ if(e[0].isIntersecting){ tween(el,to,fmt,1600); o.disconnect(); } },{threshold:.6}).observe(el);
+});

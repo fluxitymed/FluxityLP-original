@@ -1,35 +1,32 @@
-FLUXITY - Landing page
-======================
+FLUXITY - Landing page (copy Growth)
+====================================
 
 COMO USAR
 1. Descompacte a pasta e abra o index.html no navegador, ou envie todos os arquivos para a hospedagem (mesma pasta).
-2. Mantenha os arquivos juntos: index.html, style.css, script.js, socios.webp, og.jpg e favicon.png.
+2. Mantenha os arquivos juntos: index.html, style.css, script.js, as fotos (socios.webp, carlos.jpg, fernando.jpg, gabriel.jpg), og.jpg e favicon.png.
 
-O QUE PRECISA CONFIGURAR (topo do arquivo script.js, bloco CONFIG)
+ESTRUTURA DA PAGINA (copy aprovada)
+01 Hero | 02 Identificacao das dores (azul) | 03 Diferenciacao (azul, versus + hub de perguntas) | 04 Aquisicao multicanal | 05 Metodologia de Growth | 06 Entregaveis (10 cards) | 07 Autoridade e resultados (com os socios) | 08 Diagnostico comercial (formulario)
+- Todos os CTAs levam ao mesmo formulario (secao 08).
+
+CONFIGURACAO (topo do script.js, bloco CONFIG)
 - whatsapp: numero com DDI+DDD, sem simbolos (hoje: 557182150425, ou seja, 71 8215-0425).
 - countdown: segundos da tela de obrigado antes de abrir o WhatsApp (padrao: 5).
 - webhook: URL (Make, Zapier, n8n, RD Station...) que recebe cada lead em JSON. Sem isso, o lead so abre o WhatsApp.
-- redirect: "whatsapp" ou uma pagina de obrigado (ex.: "obrigado.html").
 - metaPixel e ga4: IDs opcionais para rastreamento.
-
-FOTOS
-- socios.webp / socios.png: foto do grupo, com fundo recortado (ja incluida).
-- Fotos individuais dos socios: carlos.jpg, fernando.jpg e gabriel.jpg (ja incluidas: Carlos = camisa vinho, Fernando = oculos, Gabriel = camisa branca). Se algum nome estiver trocado, renomeie os arquivos.
-
-TIPOGRAFIA
-- IBM Plex Sans (Google Fonts, carregada pelo index.html; precisa de internet).
-
-PALETA
-- Padrao: azul marinho + laranja escuro (#E8590C) + branco gelo (#F2F6FF / #F6F9FF), com secoes de fundo branco intercaladas.
-- Para a paleta azul: substitua style.css pelo arquivo da pasta opcional-paleta-azul.
-
-SIMULACAO "ANTES X DEPOIS"
-- Numeros ilustrativos no objeto SIM do script.js. Troque por um caso real quando tiver.
-
-PUBLICACAO
-- No index.html, troque o og:image por uma URL completa (ex.: https://www.seusite.com.br/og.jpg).
 
 QUALIFICACAO DO FORMULARIO (script.js, objeto QUAL)
 - Cada resposta vale pontos (faturamento, contatos de marketing, forma de atendimento), maximo 9.
 - 7 ou mais = Alta prioridade | 4 a 6 = Media prioridade | ate 3 = Em avaliacao.
 - Todo lead vai para a tela de obrigado e para o WhatsApp; a prioridade e o score vao na mensagem e no webhook (campos score e qualificacao).
+
+CASE (secao 07)
+- Dr. Leonardo Carvalho, periodo 01/10 a 14/11/2026. Antes de publicar, confirme a autorizacao de uso dos dados e da imagem e a definicao de "investimento total".
+- Resultados historicos, sem garantia de desempenho futuro.
+
+FOTOS DOS SOCIOS: Carlos = camisa vinho, Fernando = oculos, Gabriel = camisa branca. Se algum nome estiver trocado, renomeie os arquivos.
+PALETA: azul marinho + laranja (#E8590C) + branco gelo. Para a paleta azul, substitua style.css pelo arquivo de opcional-paleta-azul.
+FONTE: IBM Plex Sans (Google Fonts; precisa de internet).
+PUBLICACAO: no index.html, troque o og:image por uma URL completa (ex.: https://www.seusite.com.br/og.jpg).
+
+FUNDOS: predominio do azul marinho; o branco gelo aparece so nas secoes 04 (aquisicao multicanal) e 06 (entregaveis), para quebrar sequencias longas de azul.

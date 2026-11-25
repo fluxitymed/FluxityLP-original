@@ -97,6 +97,35 @@ $("form").addEventListener("submit",async e=>{
 
 const waLink = m => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(m)}`;
 
+/* Perguntas do diagnóstico: o último cartão explorado permanece selecionado. */
+(function(){
+  const hub=document.querySelector("#diferenciacao .hub");
+  const copy=$("hubCopy");
+  if(!hub||!copy) return;
+  const cards=[...hub.querySelectorAll("[data-hub-card]")];
+  const links=[...hub.querySelectorAll("[data-hub-link]")];
+  const select=key=>{
+    cards.forEach(card=>{
+      const active=card.dataset.hubCard===key;
+      card.classList.toggle("active",active);
+      card.setAttribute("aria-pressed",active);
+      if(active) copy.textContent=card.dataset.hubCopy;
+    });
+    links.forEach(link=>link.classList.toggle("active",link.dataset.hubLink===key));
+  };
+  cards.forEach(card=>{
+    const activate=()=>select(card.dataset.hubCard);
+    card.addEventListener("pointerenter",activate);
+    card.addEventListener("click",activate);
+    card.addEventListener("focus",activate);
+    card.addEventListener("keydown",event=>{
+      if(event.key!=="Enter"&&event.key!==" ") return;
+      event.preventDefault(); activate();
+    });
+  });
+  select("tratamentos");
+})();
+
 
 /* Carrossel de cards dos sócios */
 (function(){

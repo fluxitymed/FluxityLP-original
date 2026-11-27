@@ -17,6 +17,14 @@ const track=(n)=>{try{window.fbq&&fbq("track",n==="lead"?"Lead":"Contact");windo
 const SOLVE = ["IA para atendimento inicial","Equipe de vendedores","CRM e rastreamento","Aquisição multicanal","Gestão de tráfego pago","Social Selling","Social Media","Treinamento comercial","Reativação de pacientes","Metas e planejamento"];
 
 const $ = id => document.getElementById(id);
+
+/* O formulário aparece logo após a identificação das dores, antes da diferenciação. */
+const contactSection = $("contato");
+const differentiationSection = $("diferenciacao");
+if(contactSection && differentiationSection){
+  differentiationSection.before(contactSection);
+}
+
 /* Faixa infinita */
 const t = document.getElementById("track");
 const set = SOLVE.map(s => `<span>${s}</span>`).join("");
@@ -59,7 +67,7 @@ const rules={
   fat:v=>!!v, mkt:v=>!!v, aten:v=>!!v
 };
 function showThanks(d){
-  const msg=`Olá! Sou ${d.nome} (${d.especialidade}) e preenchi o formulário da Fluxity.\nFaturamento: ${d.faturamento}\nContatos de marketing: ${d.contatos_marketing}\nAtendimento hoje: ${d.atendimento}\nPerfil: ${d.qualificacao} (${d.score}/9)`;
+  const msg=`Olá! Preenchi o formulário da LP da Fluxity e gostaria de agendar um diagnóstico comercial.\n\nNome: ${d.nome}\nEspecialidade: ${d.especialidade}\nWhatsApp: ${d.whatsapp}\nFaturamento: ${d.faturamento}\nContatos de marketing: ${d.contatos_marketing}\nAtendimento hoje: ${d.atendimento}\nPerfil: ${d.qualificacao} (${d.score}/9)`;
   const url=CONFIG.redirect==="whatsapp"?waLink(msg):CONFIG.redirect;
   const box=$("thx"), ring=$("thxRing"), total=CONFIG.countdown||5;
   box.hidden=false; document.body.classList.add("lock");
@@ -96,6 +104,11 @@ $("form").addEventListener("submit",async e=>{
 });
 
 const waLink = m => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(m)}`;
+const ctaMessage = "Olá! Gostaria de saber mais sobre a Fluxity e agendar um diagnóstico comercial.";
+
+document.querySelectorAll('a.btn[href="#contato"]').forEach(cta => {
+  cta.href=waLink(ctaMessage);
+});
 
 /* Perguntas do diagnóstico: o último cartão explorado permanece selecionado. */
 (function(){
